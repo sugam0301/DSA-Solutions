@@ -1,26 +1,33 @@
 class Solution {
 public:
-    int maxHeight(vector<vector<int>>& cuboids) 
+    int maxHeight(vector<vector<int>>& boxdim) 
     {
-        int n = cuboids.size();
-        vector<int> dp(n, 0);
-        int ans = 0;
-        for(int i = 0; i < n; i++) //rotations
-            sort(cuboids[i].begin(), cuboids[i].end());
+        int n = boxdim.size();
+        for(auto &x : boxdim)
+            sort(x.begin(), x.end());
         
-        sort(cuboids.begin(), cuboids.end());
-        //Max Sum Inc Subseq 
-        for(int i = 0; i < n; i++) 
+        sort(boxdim.begin(), boxdim.end());
+        
+        //apply the MISS
+        
+        //init the dp 1d vector - height - MISS
+        vector<int>dp(n);
+       
+        int res =  0;
+        for(int i=0; i<n; i++)
         {
-            dp[i] = cuboids[i][2]; 
-            for(int j = i - 1; j >= 0; j--) 
+            dp[i] = boxdim[i][2];
+            for(int j=0; j<i; j++)
             {
-                if(cuboids[i][0] >= cuboids[j][0] && cuboids[i][1] >= cuboids[j][1] && 
-                   cuboids[i][2] >= cuboids[j][2]) 
-                    dp[i] = max(dp[i], cuboids[i][2] + dp[j]);
+                if(boxdim[i][0]>=boxdim[j][0] and boxdim[i][1]>=boxdim[j][1] and boxdim[i][2]>=boxdim[j][2])
+                dp[i] = max(dp[i], dp[j]+boxdim[i][2]);
             }
-            ans = max(dp[i], ans);
+            cout<<res<<" ";
+            res = max(res, dp[i]);
         }
-        return ans;
+        
+
+        return res;
+        
     }
 };
