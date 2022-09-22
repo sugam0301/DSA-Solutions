@@ -12,9 +12,13 @@ public:
         for(int i=1;i<n;i++)
         {
             if(arr[i][0] <= res.back()[1])
-                res.back()[1] = max(res.back()[1],arr[i][1]);
-            else
-                res.push_back(arr[i]);
+            {
+                res.back()[1] = max(arr[i][1], res.back()[1]);
+            }
+            else{
+                res.push_back({arr[i][0], arr[i][1]});
+            }
+
         }
         return res;
     }
